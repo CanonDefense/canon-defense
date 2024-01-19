@@ -10,24 +10,46 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
     private readonly float rotationOffsetDegrees = -90f;
     public GameObject bulletPrefab;
-
+    public int maxAmmo = 10;
+    private int currentAmmo;
+    public float reloadTime = 10f;
+    private bool isReloading = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentAmmo = maxAmmo;   
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(isReloading) {
+            return;
+        }
         MoveCanon();
 
         if (Input.GetMouseButtonDown(0)) {
             FireCanon();
         }
+
+        if(currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
     }
 
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("Reloading");
+
+        yield return new WaitForSeconds(reloadTime);
+        
+        currentAmmo = maxAmmo;
+        isReloading = false;
+    }
     private void MoveCanon()
     {
         transform.rotation = GetRotationTowardsMouse(rotationOffsetDegrees);
@@ -35,6 +57,8 @@ public class PlayerController : MonoBehaviour
 
     private void FireCanon()
     {
+        currentAmmo--;
+        
         Vector3 bulletDirection = GetRotationTowardsMouse() * Vector3.right;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
