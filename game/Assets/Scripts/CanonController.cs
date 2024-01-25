@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private int currentAmmo;
     public float reloadTime = 10f;
     private bool isReloading = false;
+    public float shotReloadTime = 2f;
+    private bool isShotReloading = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,15 @@ public class PlayerController : MonoBehaviour
         currentAmmo = maxAmmo;
         isReloading = false;
     }
+
+    IEnumerator ShotReload()
+    {
+        isShotReloading = true;
+
+        yield return new WaitForSeconds(shotReloadTime);
+        
+        isShotReloading = false;
+    }
     private void MoveCanon()
     {
         transform.rotation = GetRotationTowardsMouse(rotationOffsetDegrees);
@@ -57,6 +68,11 @@ public class PlayerController : MonoBehaviour
 
     private void FireCanon()
     {
+        if(isShotReloading) {
+            return;
+        }
+        StartCoroutine(ShotReload());
+        
         currentAmmo--;
         
         Vector3 bulletDirection = GetRotationTowardsMouse() * Vector3.right;
