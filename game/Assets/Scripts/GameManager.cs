@@ -12,6 +12,13 @@ public class GameManager : MonoBehaviour
     private int points = 0;
     private int wave = 1;
 
+    public static GameManager instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +29,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void AddPoints(int points)
+    {
+        this.points += points;
     }
 
     IEnumerator SpawnEnemiesCoroutine()
@@ -40,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject prefab = soldierPrefab;
 
-        if (Random.value <= 0.1f) {
+        if (Random.value <= 0.15f) {
             prefab = tankPrefab;
         }
 
