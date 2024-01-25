@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5955283860970961109}
   - component: {fileID: 2680609920789707560}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 1663450485034794510}
   - component: {fileID: 3188699325102172172}
   - component: {fileID: 8145275150201165814}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Soldier
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbd867cbbbc5094290c4491fbbc3d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1
   speed: 2
+  rewardPoints: 1
 --- !u!50 &3188699325102172172
 Rigidbody2D:
   serializedVersion: 4
