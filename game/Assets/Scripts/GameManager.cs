@@ -71,4 +71,9 @@ public class GameManager : MonoBehaviour
         // Display Wave
         GUI.Label(new Rect(10, 50, 200, 30), "Wave: " + wave, style);
     }
+
+    public void OnUpgradeButtonClick()
+    {
+        Time.timeScale = 0f;
+    }
 }
