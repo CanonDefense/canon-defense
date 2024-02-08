@@ -16,9 +16,8 @@ public class GameManager : MonoBehaviour
     private float spawnInterval = 3f;
 
     // Canvas
-    public Canvas gameCanvas;
-    public Canvas upgradeCanvas;
-
+    public Canvas inGameMenu;
+    public Canvas upgradeMenu;
 
     // Stats
     private int points = 0;
@@ -78,8 +77,8 @@ public class GameManager : MonoBehaviour
     public void OpenUpgradeMenu()
     {
         PauseGame();
-        gameCanvas.gameObject.SetActive(false);
-        upgradeCanvas.gameObject.SetActive(true);
+        inGameMenu.gameObject.SetActive(false);
+        upgradeMenu.gameObject.SetActive(true);
     }
 
     public bool BuyUpgrade(AvailableUpgrades upgrade)
@@ -110,8 +109,8 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        gameCanvas.gameObject.SetActive(true);
-        upgradeCanvas.gameObject.SetActive(false);
+        inGameMenu.gameObject.SetActive(true);
+        upgradeMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
 
