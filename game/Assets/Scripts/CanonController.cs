@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -30,14 +31,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
             FireCanon();
         }
 
         MoveCanon();
-
-
     }
 
     IEnumerator Reload()
@@ -59,8 +57,13 @@ public class PlayerController : MonoBehaviour
         
         isShotReloading = false;
     }
+
     private void MoveCanon()
     {
+        if (GameManager.instance.IsGamePaused()) {
+            return;
+        }
+
         transform.rotation = GetRotationTowardsMouse(rotationOffsetDegrees);
     }
 
@@ -104,6 +107,10 @@ public class PlayerController : MonoBehaviour
 
     void OnGUI()
     {
+        if (GameManager.instance.IsGamePaused()) {
+            return;
+        }
+
         // Set the GUIStyle for larger text
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = 20;
