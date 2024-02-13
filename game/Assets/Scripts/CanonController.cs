@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public float bulletSpeed = 12f;
+    public float bulletSpeed = 125f;
     public Transform firePoint;
-    private readonly float rotationOffsetDegrees = -90f;
+    private readonly float rotationOffsetDegrees = 0f;
     public GameObject bulletPrefab;
     public int maxAmmo = 10;
     private int currentAmmo;
