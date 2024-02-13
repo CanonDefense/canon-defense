@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,12 +20,15 @@ public class GameManager : MonoBehaviour
     public Canvas inGameMenu;
     public Canvas upgradeMenu;
 
+    // Background.
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] backgrounds;
+
     // Stats
     private int points = 0;
     private int wave = 1;
 
     // Upgrades
-
     [Serializable]
     public enum AvailableUpgrades {RAPID_RELOAD, EXPLOSIVE_SHELLS, ADVANCED_AMMO, EMP_BURST}
     private enum UpgradesCost {
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer.sprite = backgrounds[UnityEngine.Random.Range(0, backgrounds.Length)];
         StartCoroutine(SpawnEnemiesCoroutine());
     }
 
