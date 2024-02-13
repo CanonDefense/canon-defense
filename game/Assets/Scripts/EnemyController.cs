@@ -7,19 +7,24 @@ public class Enemy : MonoBehaviour
     public int health;
     public float speed;
     public int rewardPoints;
+
+    private Rigidbody2D rb;
     private Animator animator;
+
     private bool isKilled = false;
+    private bool stunned = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isKilled) {
+        if (!isKilled && !stunned) {
             transform.position += Vector3.left * speed * Time.deltaTime;
         }
     }
@@ -36,14 +41,25 @@ public class Enemy : MonoBehaviour
     {
         health--;
 
+        if (GameManager.instance.HasUpgrade(GameManager.AvailableUpgrades.EMP_BURST)) {
+            stunned = true;
+            Invoke("RecoverFromEmp", 2.5f);
+        }
+
         if (health <= 0) {
             Die();
         }
     }
 
+    private void RecoverFromEmp()
+    {
+        stunned = false;
+    }
+
     private void Die()
     {
         isKilled = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         animator.SetBool("die", true);
         GameManager.instance.AddPoints(rewardPoints);
     }
@@ -51,5 +67,11 @@ public class Enemy : MonoBehaviour
     private void OnDieAnimationFinished()
     {
         Destroy(gameObject);
+    }
+
+    void OnBecameInvisible() {
+        if (gameObject.transform.position.x < -10) {
+            Destroy(gameObject);
+        }
     }
 }
