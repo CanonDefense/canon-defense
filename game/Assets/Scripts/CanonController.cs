@@ -91,6 +91,9 @@ public class PlayerController : MonoBehaviour
 
         currentAmmo--;
 
+        // Play sound
+        GameManager.instance.PlayCanonFireSound();
+
         if(currentAmmo <= 0)
         {
             StartCoroutine(Reload());

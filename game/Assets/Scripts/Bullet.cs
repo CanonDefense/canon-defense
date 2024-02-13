@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -47,6 +47,9 @@ public class Bullet : MonoBehaviour
 
         // Start explosion animation
         animator.enabled = true;
+
+        // Play sound
+        GameManager.instance.PlayBulletExplosionSound();
     }
 
     public void OnDestroy()

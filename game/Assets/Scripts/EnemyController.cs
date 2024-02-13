@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     private bool isKilled = false;
     private bool stunned = false;
 
+    public bool isTank = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +64,13 @@ public class Enemy : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         animator.SetBool("die", true);
         GameManager.instance.AddPoints(rewardPoints);
+
+        // Play sound
+        if (isTank) {
+            GameManager.instance.PlayTankExplosionSound();
+        } else {
+            GameManager.instance.PlaySolderDyingSound();
+        }
     }
 
     private void OnDieAnimationFinished()
