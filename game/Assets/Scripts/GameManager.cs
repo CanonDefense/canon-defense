@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     // Prefabs
     public GameObject soldierPrefab;
     public GameObject tankPrefab;
+    public GameObject bulletPrefab;
 
     // Spawns config
     public Transform enemySpawn;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     private int points = 0;
     private int wave = 1;
     private int spawnedInRound = 0;
+    private bool gameOver = false;
 
     // Upgrades
     [Serializable]
@@ -135,6 +137,11 @@ public class GameManager : MonoBehaviour
         return Time.timeScale == 0;
     }
 
+    public bool IsGameOver()
+    {
+        return gameOver;
+    }
+
     public void ResumeGame()
     {
         inGameMenu.gameObject.SetActive(true);
@@ -144,6 +151,21 @@ public class GameManager : MonoBehaviour
 
     void OnGUI()
     {
+        if (gameOver) {
+            GUIStyle textStyle = new GUIStyle(GUI.skin.label);
+            textStyle.fontSize = 60;
+            textStyle.normal.textColor = Color.red;
+
+            // Calculate the position to center the text
+            float reloadingTextWidth = 400;  // Adjust the width of the text box as needed
+            float reloadingTextHeight = 70;  // Adjust the height of the text box as needed
+            float x = (Screen.width - reloadingTextWidth) / 2;
+            float y = (Screen.height - reloadingTextHeight) / 2;
+
+            GUI.Box(new Rect(x, y, reloadingTextWidth - 30, reloadingTextHeight), "");
+            GUI.Label(new Rect(x, y, reloadingTextWidth, reloadingTextHeight), "GAME OVER", textStyle);
+            return;
+        }
         if (IsGamePaused()) {
             return;
         }
@@ -161,7 +183,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnEnemiesCoroutine()
     {
-        while (true)
+        while (!gameOver)
         {
             float random = Mathf.Clamp(UnityEngine.Random.value, 0f, 0.5f);
 
@@ -178,6 +200,27 @@ public class GameManager : MonoBehaviour
             if (spawnedInRound >= 10) {
                 wave++;
                 spawnedInRound = 0;
+            }
+        }
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        StartCoroutine(SpawnGameOver());
+    }
+
+    IEnumerator SpawnGameOver()
+    {
+        while(true) {
+            for(float i = -10; i < 10; i++) {
+                GameObject bullet = Instantiate(bulletPrefab, new Vector3(i, 4.5f, 0f), Quaternion.identity);
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            for(float i = 10; i > -10; i--) {
+                GameObject bullet = Instantiate(bulletPrefab, new Vector3(i, 4.5f, 0f), Quaternion.identity);
+                yield return new WaitForSeconds(0.05f);
             }
         }
     }

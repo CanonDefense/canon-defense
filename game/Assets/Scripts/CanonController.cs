@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCanon()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+
         if (GameManager.instance.IsGamePaused()) {
             return;
         }
@@ -68,6 +72,10 @@ public class PlayerController : MonoBehaviour
 
     private void FireCanon()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+        
         if (isShotReloading) {
             return;
         }
@@ -106,6 +114,10 @@ public class PlayerController : MonoBehaviour
 
     void OnGUI()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+
         if (GameManager.instance.IsGamePaused()) {
             return;
         }
