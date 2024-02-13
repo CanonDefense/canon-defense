@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject prefab = soldierPrefab;
 
-        if (UnityEngine.Random.value <= 0.25f) {
+        if (UnityEngine.Random.value <= 0.3f) {
             prefab = tankPrefab;
         }
 
@@ -159,8 +159,9 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
+            float random = UnityEngine.Random.value;
             // Wait for 3 seconds
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(spawnInterval - random);
 
             // Spawn the prefab
             SpawnEnemy();
