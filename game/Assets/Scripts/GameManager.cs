@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     // Stats
     private int points = 0;
     private int wave = 1;
+    private int spawnedInRound = 0;
 
     // Upgrades
     [Serializable]
@@ -77,9 +79,10 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
+        spawnedInRound++;
         GameObject prefab = soldierPrefab;
 
-        if (UnityEngine.Random.value <= 0.3f) {
+        if (UnityEngine.Random.value <= 0.25f) {
             prefab = tankPrefab;
         }
 
@@ -147,6 +150,7 @@ public class GameManager : MonoBehaviour
 
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = 20;
+        style.normal.textColor = Color.red;
 
         // Display Points
         GUI.Label(new Rect(10, 10, 200, 30), "Points: " + points, style);
@@ -159,12 +163,22 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            float random = UnityEngine.Random.value;
-            // Wait for 3 seconds
-            yield return new WaitForSeconds(spawnInterval - random);
+            float random = Mathf.Clamp(UnityEngine.Random.value, 0f, 0.5f);
+
+            // Increase difficulty based on wave
+            float difficulty = 0.25f * wave;
+
+            // Wait seconds before new spawn
+            float seconds = (spawnInterval - difficulty) - random;
+            yield return new WaitForSeconds(Mathf.Clamp(seconds, 1f, spawnInterval));
 
             // Spawn the prefab
             SpawnEnemy();
+
+            if (spawnedInRound >= 10) {
+                wave++;
+                spawnedInRound = 0;
+            }
         }
     }
 }
