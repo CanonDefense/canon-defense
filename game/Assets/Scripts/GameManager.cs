@@ -94,6 +94,11 @@ public class GameManager : MonoBehaviour
         upgradeMenu.gameObject.SetActive(true);
     }
 
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
     public bool BuyUpgrade(AvailableUpgrades upgrade)
     {
         // Control already upgraded

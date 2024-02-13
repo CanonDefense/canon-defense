@@ -831,7 +831,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3505069504636062357, guid: 34c4ad7c3e3de8c40a9f738352fff948, type: 3}
   maxAmmo: 10
   reloadTime: 5
-  shotReloadTime: 0.5
+  shotReloadTime: 1
 --- !u!1 &1513838188
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 2699137882414727041, guid: 256474c4b5200184bba35759884f6a67, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 299527186}
     - target: {fileID: 3464274393757930272, guid: 256474c4b5200184bba35759884f6a67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 704.4598
@@ -924,10 +928,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 299527186}
-    - target: {fileID: 4598478786111384207, guid: 256474c4b5200184bba35759884f6a67, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenUpgradeMenu
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
