@@ -112,6 +112,11 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public bool HasUpgrade(AvailableUpgrades upgrade)
+    {
+        return upgrades[upgrade];
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;

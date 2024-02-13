@@ -42,9 +42,9 @@ public class PlayerController : MonoBehaviour
         isReloading = true;
         Debug.Log("Reloading");
 
-        yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(GameManager.instance.HasUpgrade(GameManager.AvailableUpgrades.RAPID_RELOAD) ? reloadTime / 2 : reloadTime);
         
-        currentAmmo = maxAmmo;
+        currentAmmo = GameManager.instance.HasUpgrade(GameManager.AvailableUpgrades.ADVANCED_AMMO) ? maxAmmo * 2 : maxAmmo;
         isReloading = false;
     }
 
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         isShotReloading = true;
 
-        yield return new WaitForSeconds(shotReloadTime);
+        yield return new WaitForSeconds(GameManager.instance.HasUpgrade(GameManager.AvailableUpgrades.RAPID_RELOAD) ? shotReloadTime / 2 : shotReloadTime);
         
         isShotReloading = false;
     }
@@ -119,17 +119,18 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(Screen.width - ammoLabelWidth - 10, 10, ammoLabelWidth, 30), "Ammo: " + currentAmmo, style);
 
         if (isReloading) {
-            GUIStyle blinkingStyle = new GUIStyle(GUI.skin.label);
-            blinkingStyle.fontSize = 40;
-            blinkingStyle.normal.textColor = Color.red;
+            GUIStyle textStyle = new GUIStyle(GUI.skin.label);
+            textStyle.fontSize = 40;
+            textStyle.normal.textColor = Color.red;
 
             // Calculate the position to center the text
-            float reloadingTextWidth = 200;  // Adjust the width of the text box as needed
+            float reloadingTextWidth = 300;  // Adjust the width of the text box as needed
             float reloadingTextHeight = 50;  // Adjust the height of the text box as needed
             float x = (Screen.width - reloadingTextWidth) / 2;
             float y = (Screen.height - reloadingTextHeight) / 2;
 
-            GUI.Label(new Rect(x, y, reloadingTextWidth, reloadingTextHeight), "RELOADING", blinkingStyle);
+            GUI.Box(new Rect(x, y, reloadingTextWidth - 60, reloadingTextHeight), "");
+            GUI.Label(new Rect(x, y, reloadingTextWidth, reloadingTextHeight), "RELOADING", textStyle);
         }
     }
 }
