@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     // Prefabs
     public GameObject soldierPrefab;
     public GameObject tankPrefab;
+    public GameObject bulletPrefab;
 
     // Spawns config
     public Transform enemySpawn;
@@ -27,6 +29,14 @@ public class GameManager : MonoBehaviour
     // Stats
     private int points = 0;
     private int wave = 1;
+    private int spawnedInRound = 0;
+    private bool gameOver = false;
+
+    // Sounds
+    public AudioClip bulletExplosionSound;
+    public AudioClip tankExplosionSound;
+    public AudioClip soldierDyingSound;
+    public AudioClip canonFireSound;
 
     // Upgrades
     [Serializable]
@@ -52,6 +62,8 @@ public class GameManager : MonoBehaviour
         {AvailableUpgrades.EMP_BURST, false},
     };
 
+    private AudioSource audio;
+
     void Awake()
     {
         instance = this;
@@ -60,6 +72,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();    
         spriteRenderer.sprite = backgrounds[UnityEngine.Random.Range(0, backgrounds.Length)];
         StartCoroutine(SpawnEnemiesCoroutine());
     }
@@ -77,9 +90,10 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
+        spawnedInRound++;
         GameObject prefab = soldierPrefab;
 
-        if (UnityEngine.Random.value <= 0.3f) {
+        if (UnityEngine.Random.value <= 0.25f) {
             prefab = tankPrefab;
         }
 
@@ -132,6 +146,11 @@ public class GameManager : MonoBehaviour
         return Time.timeScale == 0;
     }
 
+    public bool IsGameOver()
+    {
+        return gameOver;
+    }
+
     public void ResumeGame()
     {
         inGameMenu.gameObject.SetActive(true);
@@ -141,12 +160,28 @@ public class GameManager : MonoBehaviour
 
     void OnGUI()
     {
+        if (gameOver) {
+            GUIStyle textStyle = new GUIStyle(GUI.skin.label);
+            textStyle.fontSize = 60;
+            textStyle.normal.textColor = Color.red;
+
+            // Calculate the position to center the text
+            float reloadingTextWidth = 400;  // Adjust the width of the text box as needed
+            float reloadingTextHeight = 70;  // Adjust the height of the text box as needed
+            float x = (Screen.width - reloadingTextWidth) / 2;
+            float y = (Screen.height - reloadingTextHeight) / 2;
+
+            GUI.Box(new Rect(x, y, reloadingTextWidth - 30, reloadingTextHeight), "");
+            GUI.Label(new Rect(x, y, reloadingTextWidth, reloadingTextHeight), "GAME OVER", textStyle);
+            return;
+        }
         if (IsGamePaused()) {
             return;
         }
 
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = 20;
+        style.normal.textColor = Color.red;
 
         // Display Points
         GUI.Label(new Rect(10, 10, 200, 30), "Points: " + points, style);
@@ -157,14 +192,70 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnEnemiesCoroutine()
     {
-        while (true)
+        while (!gameOver)
         {
-            float random = UnityEngine.Random.value;
-            // Wait for 3 seconds
-            yield return new WaitForSeconds(spawnInterval - random);
+            float random = Mathf.Clamp(UnityEngine.Random.value, 0f, 0.5f);
+
+            // Increase difficulty based on wave
+            float difficulty = 0.25f * wave;
+
+            // Wait seconds before new spawn
+            float seconds = (spawnInterval - difficulty) - random;
+            yield return new WaitForSeconds(Mathf.Clamp(seconds, 1f, spawnInterval));
 
             // Spawn the prefab
             SpawnEnemy();
+
+            if (spawnedInRound >= 10) {
+                wave++;
+                spawnedInRound = 0;
+            }
         }
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        audio.mute = true;
+        StartCoroutine(SpawnGameOver());
+    }
+
+    IEnumerator SpawnGameOver()
+    {
+        while(true) {
+            for(float i = -10; i < 10; i++) {
+                GameObject bullet = Instantiate(bulletPrefab, new Vector3(i, 4.5f, 0f), Quaternion.identity);
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            for(float i = 10; i > -10; i--) {
+                GameObject bullet = Instantiate(bulletPrefab, new Vector3(i, 4.5f, 0f), Quaternion.identity);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+    }
+
+    public void PlayBulletExplosionSound()
+    {
+        audio.volume = 0.25f;
+        audio.PlayOneShot(bulletExplosionSound);
+    }
+
+    public void PlayCanonFireSound()
+    {
+        audio.volume = 0.2f;
+        audio.PlayOneShot(canonFireSound);
+    }
+
+    public void PlaySolderDyingSound()
+    {
+        audio.volume = 1f;
+        audio.PlayOneShot(soldierDyingSound);
+    }
+
+    public void PlayTankExplosionSound()
+    {
+        audio.volume = 0.5f;
+        audio.PlayOneShot(tankExplosionSound);
     }
 }

@@ -59,6 +59,10 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCanon()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+
         if (GameManager.instance.IsGamePaused()) {
             return;
         }
@@ -68,6 +72,10 @@ public class PlayerController : MonoBehaviour
 
     private void FireCanon()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+        
         if (isShotReloading) {
             return;
         }
@@ -82,6 +90,9 @@ public class PlayerController : MonoBehaviour
         Destroy(bullet, 10);
 
         currentAmmo--;
+
+        // Play sound
+        GameManager.instance.PlayCanonFireSound();
 
         if(currentAmmo <= 0)
         {
@@ -106,6 +117,10 @@ public class PlayerController : MonoBehaviour
 
     void OnGUI()
     {
+        if (GameManager.instance.IsGameOver()) {
+            return;
+        }
+
         if (GameManager.instance.IsGamePaused()) {
             return;
         }
@@ -113,6 +128,7 @@ public class PlayerController : MonoBehaviour
         // Set the GUIStyle for larger text
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = 20;
+        style.normal.textColor = Color.red;
 
         // Display Ammo
         float ammoLabelWidth = style.CalcSize(new GUIContent("Ammo: " + currentAmmo)).x;
