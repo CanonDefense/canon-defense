@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
     private int spawnedInRound = 0;
     private bool gameOver = false;
 
+    // Sounds
+    public AudioClip bulletExplosionSound;
+    public AudioClip tankExplosionSound;
+    public AudioClip soldierDyingSound;
+    public AudioClip canonFireSound;
+
     // Upgrades
     [Serializable]
     public enum AvailableUpgrades {RAPID_RELOAD, EXPLOSIVE_SHELLS, ADVANCED_AMMO, EMP_BURST}
@@ -56,6 +62,8 @@ public class GameManager : MonoBehaviour
         {AvailableUpgrades.EMP_BURST, false},
     };
 
+    private AudioSource audio;
+
     void Awake()
     {
         instance = this;
@@ -64,6 +72,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();    
         spriteRenderer.sprite = backgrounds[UnityEngine.Random.Range(0, backgrounds.Length)];
         StartCoroutine(SpawnEnemiesCoroutine());
     }
@@ -207,6 +216,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
+        audio.mute = true;
         StartCoroutine(SpawnGameOver());
     }
 
@@ -223,5 +233,29 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
         }
+    }
+
+    public void PlayBulletExplosionSound()
+    {
+        audio.volume = 0.25f;
+        audio.PlayOneShot(bulletExplosionSound);
+    }
+
+    public void PlayCanonFireSound()
+    {
+        audio.volume = 0.2f;
+        audio.PlayOneShot(canonFireSound);
+    }
+
+    public void PlaySolderDyingSound()
+    {
+        audio.volume = 1f;
+        audio.PlayOneShot(soldierDyingSound);
+    }
+
+    public void PlayTankExplosionSound()
+    {
+        audio.volume = 0.5f;
+        audio.PlayOneShot(tankExplosionSound);
     }
 }
