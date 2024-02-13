@@ -6,16 +6,15 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public float rotationSpeed = 5f;
-    public float bulletSpeed = 10f;
+    public float bulletSpeed = 125f;
     public Transform firePoint;
-    private readonly float rotationOffsetDegrees = -90f;
+    private readonly float rotationOffsetDegrees = 0f;
     public GameObject bulletPrefab;
     public int maxAmmo = 10;
     private int currentAmmo;
-    public float reloadTime = 10f;
+    public float reloadTime = 5f;
     private bool isReloading = false;
-    public float shotReloadTime = 2f;
+    public float shotReloadTime = 0.5f;
     private bool isShotReloading = false;
 
     // Start is called before the first frame update

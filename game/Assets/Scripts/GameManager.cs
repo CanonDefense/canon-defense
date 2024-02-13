@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,12 +20,15 @@ public class GameManager : MonoBehaviour
     public Canvas inGameMenu;
     public Canvas upgradeMenu;
 
+    // Background.
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] backgrounds;
+
     // Stats
     private int points = 0;
     private int wave = 1;
 
     // Upgrades
-
     [Serializable]
     public enum AvailableUpgrades {RAPID_RELOAD, EXPLOSIVE_SHELLS, ADVANCED_AMMO, EMP_BURST}
     private enum UpgradesCost {
@@ -33,6 +37,14 @@ public class GameManager : MonoBehaviour
         ADVANCED_AMMO = 20,
         EMP_BURST = 40
     }
+
+    private Dictionary<AvailableUpgrades, int> upgradesPrice = new() {
+        {AvailableUpgrades.RAPID_RELOAD, 10},
+        {AvailableUpgrades.EXPLOSIVE_SHELLS, 30},
+        {AvailableUpgrades.ADVANCED_AMMO, 20},
+        {AvailableUpgrades.EMP_BURST, 40},
+    };
+
     private Dictionary<AvailableUpgrades, bool> upgrades = new() {
         {AvailableUpgrades.RAPID_RELOAD, false},
         {AvailableUpgrades.EXPLOSIVE_SHELLS, false},
@@ -48,6 +60,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer.sprite = backgrounds[UnityEngine.Random.Range(0, backgrounds.Length)];
         StartCoroutine(SpawnEnemiesCoroutine());
     }
 
@@ -66,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject prefab = soldierPrefab;
 
-        if (UnityEngine.Random.value <= 0.15f) {
+        if (UnityEngine.Random.value <= 0.25f) {
             prefab = tankPrefab;
         }
 
@@ -88,8 +101,10 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
-        //TODO Check if user has enought points
-        if (true) {
+        //Check if user has enought points
+        int upgradePrice = upgradesPrice[upgrade];
+        if (points >= upgradePrice) {
+            points -= upgradePrice;
             upgrades[upgrade] = true;
             return true;
         }
