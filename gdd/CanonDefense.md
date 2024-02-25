@@ -129,10 +129,6 @@ The user-friendly controls employ the mouse for cannon manipulation, offering a 
 
 **Note:** "Canon Defense" leverages the Unity engine, ensuring a robust and engaging gameplay experience within standard web browsers using HTML5 technology. Players can enjoy the game without the need for specific installations or additional software.
 
-## TODO Monetization
-- TODO Business model (free-to-play, premium, etc.)
-- TODO In-app purchases or microtransactions
-
 ## Marketing and Promotion
 
 ### Target Audience
@@ -172,5 +168,31 @@ The target audience for "Canon Defense" can include:
 - Players who enjoy competing for high scores and improving their skills over time.
 - Those who appreciate leaderboards and score-based competition.
 
-### TODO Marketing strategies
-### TODO Promotion plans
+### Marketing strategies
+
+### Marketing Strategies for "Canon Defense"
+
+#### Itch.io for Visibility
+- **Launch and Updates:** Release and update the game on Itch.io, engaging with comments.
+- **Game Jams:** Participate in Itch.io game jams for visibility and feedback.
+- **Demo Version:** Offer a demo to entice players.
+
+#### Reddit Community Engagement
+- **Subreddit Activity:** Share updates and interact in subreddits like r/indiegames and r/gamedev.
+- **AMA Sessions:** Conduct AMAs to directly engage and build interest.
+- **Beta Testing Feedback:** Use Reddit for feedback collection and beta testing invitations.
+
+#### Open Sourcing on GitHub
+- **Community Contributions:** Encourage community to contribute with bug fixes, features, or levels, fostering a sense of ownership.
+- **Development Transparency:** Maintain open development logs for building trust.
+- **Collaborative Marketing:** Convert contributors into evangelists through their networks.
+
+#### Cross-Platform Synergy
+- **Cross-Promotion:** Use each platform to promote activities on the others.
+- **Consistent Branding:** Ensure unified branding and messaging across platforms.
+
+#### Community Engagement
+- **Contests:** Host contests and giveaways to engage and reward the community.
+- **User-Generated Content:** Encourage the creation of user-generated content to enhance game content and interest.
+
+Leverage Itch.io, Reddit, and GitHub to build an engaged community, enhance visibility, and create a successful indie game launch for "Canon Defense".
