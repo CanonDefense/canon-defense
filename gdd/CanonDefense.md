@@ -49,10 +49,6 @@ In "Canon Defense," the cannon employs two distinct reloading mechanics to enhan
    - *Description:* Incorporate an electromagnetic pulse (EMP) burst generator into the cannon, temporarily disabling electronic systems of enemy vehicles.
    - *Effect:* Briefly immobilizes enemy vehicles upon impact 5 seconds.
 
-- **Wind Compensation Module:**
-   - *Description:* Integrate a wind compensation module to counter the effects of dynamic wind in desert environments, ensuring more accurate shots.
-   - *Effect:* Compensates the impact of wind on projectile trajectories.
-
 **Rewards**
 
 These dual reloading mechanics offer a dynamic and strategic element to the gameplay in "Canon Defense". Players must balance the rapid reload between shots for continuous engagement with the tactical decision of when to reload the entire magazine to ensure sustained defense against waves of incoming enemies.
@@ -69,20 +65,13 @@ The user-friendly controls employ the mouse for cannon manipulation, offering a 
 
 ## Levels and Environments
 
-- **Level 1: Military Outpost**
-
-    - Description: A fortified military outpost with expansive, open terrain.
-    - Enemies: Basic infantry and light vehicles.
-
-  - **Level 2: Urban Warfare**
+  - **Level A: Urban Warfare**
 
     - Setting: Dense urban environment with winding streets and towering buildings.
-    - Enemies: Increased infantry and heavily armored vehicles.
 
-  - **Level 3: Desert Storm**
+  - **Level B: Desert Storm**
 
     - Description: Desert landscape featuring shifting sand dunes and rugged canyons.
-    - Enemies: Infantry, fast-moving vehicles and heavily armored vehicles.
 
 ## User Interface (UI)
 
@@ -104,40 +93,34 @@ The user-friendly controls employ the mouse for cannon manipulation, offering a 
 - **Main Menu:**
 
   - Play: Initiates the game and transports the player to the battlefield.
-  - Options: Accesses settings for audio, controls, and other preferences.
-  - Credits: Displays information about the development team and contributors.
+  - Exit: Allows player to exit game.
 
 - **In-Game Menu:**
 
-  - Pause/Resume: Allows players to pause and resume the game.
-  - Restart: Restarts the current level or wave.
-  - Quit: Returns the player to the main menu.
+  - Upgrade: Allows players to open upgrade menu.
+  - Exit: Allows player to exit game.
 
 - **Upgrade Menu:**
 
   - Upgrade Options: Presents a selection of cannon enhancements.
-  - Purchase: Enables players to spend earned points on upgrades.
   - Back: Returns the player to the main gameplay.
 
 **Note:** The UI of "Canon Defense" is thoughtfully crafted to provide a seamless and enjoyable gaming experience. Its clear layout, informative HUD elements, and straightforward navigation contribute to an immersive and user-friendly interface.
 
-## TODO Art and Visual Style
-- TODO Artistic direction and style
-- TODO Concept art and visual references
+## Art and Visual Style
+- CanonDefense is backed with Pixel-Art style
 
-## TODO Audio and Music
-- TODO Overview of the audio design
-- TODO Sound effects requirements
-- TODO Music style and composition details
+## Audio and Music
+- Each type enemy has their own sound
+- Canon will have fire and bullet explosion sound.
 
 ## Technical Specifications
 
 **Platforms:**
-- Browser-based (HTML5)
+- Windows 10 and upwards
 
 **System Requirements:**
-- Compatible with modern web browsers (Google Chrome, Mozilla Firefox, Safari, Microsoft Edge, etc.)
-- Stable internet connection for seamless gameplay.
+- Compatible with low-end computers
 
 **Technology Stack:**
 - Engine: Unity
